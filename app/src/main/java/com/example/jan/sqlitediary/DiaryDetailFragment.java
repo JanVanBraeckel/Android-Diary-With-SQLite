@@ -31,7 +31,7 @@ public class DiaryDetailFragment extends Fragment {
     @Bind(R.id.diaryDetailContent)
     TextView diaryDetailContent;
 
-    private String mTitle,  mContent;
+    private String mTitle, mContent;
     private long mDate;
 
     @Override
@@ -41,7 +41,7 @@ public class DiaryDetailFragment extends Fragment {
         ButterKnife.bind(this, v);
 
         Bundle args = getArguments();
-        if(args != null && args.containsKey("title") && args.containsKey("content") && args.containsKey("date")){
+        if (args != null && args.containsKey("title") && args.containsKey("content") && args.containsKey("date")) {
             mTitle = args.getString("title");
             mContent = args.getString("content");
             mDate = Long.valueOf(args.getString("date"));

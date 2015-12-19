@@ -1,5 +1,6 @@
 package com.example.jan.sqlitediary;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,16 +19,31 @@ public class MainActivity extends AppCompatActivity implements DiaryAddFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(mFragmentManager == null)
+        if (mFragmentManager == null)
             mFragmentManager = getSupportFragmentManager();
 
-        mDiaryAddFragment = new DiaryAddFragment();
-        mDiaryListFragment = new DiaryListFragment();
+        if (savedInstanceState == null) {
+            mDiaryAddFragment = new DiaryAddFragment();
+            mDiaryListFragment = new DiaryListFragment();
+            mFragmentManager.beginTransaction().add(R.id.rootView, mDiaryListFragment, "list").commit();
+        } else {
+            if (mFragmentManager.findFragmentByTag("list") == null) {
+                mDiaryListFragment = new DiaryListFragment();
+            } else {
+                mDiaryListFragment = (DiaryListFragment) mFragmentManager.findFragmentByTag("list");
+            }
+            if (mFragmentManager.findFragmentByTag("add") == null) {
+                mDiaryAddFragment = new DiaryAddFragment();
+            } else {
+                mDiaryAddFragment = (DiaryAddFragment) mFragmentManager.findFragmentByTag("add");
+            }
+            if (mFragmentManager.findFragmentByTag("detail") != null || mFragmentManager.findFragmentByTag("add") != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        }
 
-        mDiaryListFragment.setOnItemClickedListener(this);
         mDiaryAddFragment.setItemSubmittedListener(this);
-
-        mFragmentManager.beginTransaction().add(R.id.rootView, mDiaryListFragment, "list").commit();
+        mDiaryListFragment.setOnItemClickedListener(this);
     }
 
     @Override
@@ -40,11 +56,11 @@ public class MainActivity extends AppCompatActivity implements DiaryAddFragment.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(mFragmentManager == null)
+        if (mFragmentManager == null)
             mFragmentManager = getSupportFragmentManager();
-        if(id == R.id.action_addItem){
-            if(mFragmentManager.findFragmentByTag("add") == null){
-                if(mFragmentManager.findFragmentByTag("detail") != null){
+        if (id == R.id.action_addItem) {
+            if (mFragmentManager.findFragmentByTag("add") == null) {
+                if (mFragmentManager.findFragmentByTag("detail") != null) {
                     mFragmentManager.popBackStack();
                 }
                 mFragmentManager
@@ -55,8 +71,7 @@ public class MainActivity extends AppCompatActivity implements DiaryAddFragment.
 
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
-        }
-        else if(id==android.R.id.home){
+        } else if (id == android.R.id.home) {
             mFragmentManager.popBackStack();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
@@ -71,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements DiaryAddFragment.
 
     @Override
     public void onSubmit() {
-        if(mFragmentManager == null)
+        if (mFragmentManager == null)
             mFragmentManager = getSupportFragmentManager();
 
         mFragmentManager.popBackStack();
@@ -80,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements DiaryAddFragment.
 
     @Override
     public void OnItemClicked(String... args) {
-        if(mFragmentManager == null){
+        if (mFragmentManager == null) {
             mFragmentManager = getSupportFragmentManager();
         }
 

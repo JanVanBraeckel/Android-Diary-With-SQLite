@@ -44,15 +44,16 @@ public class DiaryContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String where, String[] whereArgs) {
         int count;
-        switch(sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case Constants.ENTRY:
                 count = mDatabase.delete(Constants.DiaryTable.TABLE_NAME, where, whereArgs);
                 break;
             case Constants.ENTRY_ID:
                 String entryId = uri.getPathSegments().get(1);
-                count = mDatabase.delete(Constants.DiaryTable.TABLE_NAME, Constants.DiaryTable._ID + "="+ entryId + (!TextUtils.isEmpty(where) ? " AND (" + where + ")" : ""), whereArgs);
+                count = mDatabase.delete(Constants.DiaryTable.TABLE_NAME, Constants.DiaryTable._ID + "=" + entryId + (!TextUtils.isEmpty(where) ? " AND (" + where + ")" : ""), whereArgs);
                 break;
-            default: throw new IllegalArgumentException("Unknown URI " + uri);
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
@@ -97,8 +98,8 @@ public class DiaryContentProvider extends ContentProvider {
             values.put(Constants.DiaryTable.COLUMN_NAME_DIARY_DATE, now);
         }
 
-        long rowId = mDatabase.insertDiary(Constants.DiaryTable.TABLE_NAME, Constants.DiaryTable.CONTENT ,values);
-        if(rowId > 0){
+        long rowId = mDatabase.insertDiary(Constants.DiaryTable.TABLE_NAME, Constants.DiaryTable.CONTENT, values);
+        if (rowId > 0) {
             Uri diaryUri = ContentUris.withAppendedId(Constants.DiaryTable.CONTENT_URI, rowId);
             getContext().getContentResolver().notifyChange(diaryUri, null);
             return diaryUri;
@@ -142,7 +143,7 @@ public class DiaryContentProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
         int count;
-        switch(sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case Constants.ENTRY:
                 count = mDatabase.update(Constants.DiaryTable.TABLE_NAME, values, selection, selectionArgs);
                 break;
@@ -150,7 +151,8 @@ public class DiaryContentProvider extends ContentProvider {
                 String entryId = uri.getPathSegments().get(1);
                 count = mDatabase.update(Constants.DiaryTable.TABLE_NAME, values, Constants.DiaryTable._ID + "=" + entryId + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ")" : ""), selectionArgs);
                 break;
-            default: throw new IllegalArgumentException("Unknown URI " + uri);
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);

@@ -24,7 +24,7 @@ public class Constants {
         public static final String COLUMN_NAME_DIARY_TITLE = "title";
         public static final String COLUMN_NAME_DIARY_CONTENT = "content";
         public static final String COLUMN_NAME_DIARY_DATE = "recordDate";
-        public static final String CONTENT ="entry";
+        public static final String CONTENT = "entry";
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/entries");
     }
 }

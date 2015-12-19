@@ -35,11 +35,11 @@ public class DiaryListFragment extends ListFragment implements LoaderManager.Loa
     private SimpleCursorAdapter mAdapter;
     private OnItemClickedListener mListener;
 
-    public interface OnItemClickedListener{
+    public interface OnItemClickedListener {
         void OnItemClicked(String... args);
     }
 
-    public void setOnItemClickedListener(OnItemClickedListener listener){
+    public void setOnItemClickedListener(OnItemClickedListener listener) {
         mListener = listener;
     }
 
@@ -56,25 +56,24 @@ public class DiaryListFragment extends ListFragment implements LoaderManager.Loa
                 new String[]{Constants.DiaryTable.COLUMN_NAME_DIARY_TITLE, Constants.DiaryTable.COLUMN_NAME_DIARY_DATE},
                 new int[]{R.id.entryName, R.id.entryDate},
                 0);
-        mAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                if (columnIndex == 1) {
-                    long date = cursor.getLong(columnIndex);
-                    TextView textView = (TextView) view;
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
-                    StringBuilder dateBuilder = new StringBuilder();
-                    Date d = new Date(date);
-                    dateBuilder.append(getContext().getString(R.string.madeOn))
-                            .append(dateFormat.format(d))
-                            .append(getContext().getString(R.string.at))
-                            .append(hourFormat.format(d));
-                    textView.setText(dateBuilder.toString());
-                    return true;
-                }
-                return false;
+        mAdapter.setViewBinder((view, cursor, columnIndex) -> {
+            if (columnIndex == 1) {
+                long date = cursor.getLong(columnIndex);
+                TextView textView = (TextView) view;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+                StringBuilder dateBuilder = new StringBuilder();
+                Date d = new Date(date);
+                dateBuilder.append(getContext().getString(R.string.madeOn))
+                        .append(dateFormat.format(d))
+                        .append(getContext().getString(R.string.at))
+                        .append(hourFormat.format(d));
+                textView.setText(dateBuilder.toString());
+                return true;
             }
+            return false;
+
+
         });
         setListAdapter(mAdapter);
 
@@ -89,7 +88,8 @@ public class DiaryListFragment extends ListFragment implements LoaderManager.Loa
         String content = wrapper.getString(wrapper.getColumnIndex(Constants.DiaryTable.COLUMN_NAME_DIARY_CONTENT));
         String date = wrapper.getString(wrapper.getColumnIndex(Constants.DiaryTable.COLUMN_NAME_DIARY_DATE));
 
-        mListener.OnItemClicked(title, content, date);
+        if (title != null && content != null && date != null && mListener != null)
+            mListener.OnItemClicked(title, content, date);
     }
 
     @Override

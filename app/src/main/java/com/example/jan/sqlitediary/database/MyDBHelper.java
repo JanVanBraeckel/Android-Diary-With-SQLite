@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Jan on 19/12/2015.
  */
-public class MyDBHelper extends SQLiteOpenHelper{
+public class MyDBHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Diary.db";
 
-    public MyDBHelper(Context context){
+    public MyDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

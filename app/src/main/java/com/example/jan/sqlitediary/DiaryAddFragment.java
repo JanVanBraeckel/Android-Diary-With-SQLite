@@ -31,11 +31,11 @@ public class DiaryAddFragment extends Fragment {
 
     private ItemSubmittedListener mListener;
 
-    public void setItemSubmittedListener(ItemSubmittedListener listener){
+    public void setItemSubmittedListener(ItemSubmittedListener listener) {
         mListener = listener;
     }
 
-    public interface ItemSubmittedListener{
+    public interface ItemSubmittedListener {
         void onSubmit();
     }
 
@@ -47,18 +47,18 @@ public class DiaryAddFragment extends Fragment {
     }
 
     @OnClick(R.id.diaryAddSubmit)
-    public void saveToDB(View v){
+    public void saveToDB(View v) {
         String diaryTitle = diaryAddTitle.getText().toString();
-        String diaryContent= diaryAddContent.getText().toString();
+        String diaryContent = diaryAddContent.getText().toString();
 
-        if(TextUtils.isEmpty(diaryTitle)){
+        if (TextUtils.isEmpty(diaryTitle)) {
             diaryAddTitle.setError(getString(R.string.empty));
         }
-        if(TextUtils.isEmpty(diaryContent)){
+        if (TextUtils.isEmpty(diaryContent)) {
             diaryAddContent.setError(getString(R.string.empty));
         }
 
-        if(!TextUtils.isEmpty(diaryTitle) && !TextUtils.isEmpty(diaryContent)){
+        if (!TextUtils.isEmpty(diaryTitle) && !TextUtils.isEmpty(diaryContent)) {
             ContentValues values = new ContentValues();
             values.put(Constants.DiaryTable.COLUMN_NAME_DIARY_TITLE, diaryTitle);
             values.put(Constants.DiaryTable.COLUMN_NAME_DIARY_CONTENT, diaryContent);
