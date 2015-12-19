@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SQLiteDiary</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_addItem">Add entry</string>
+    <string name="diaryTitle">Diary title</string>
+    <string name="diaryContent">Content</string>
+    <string name="submit">submit</string>
+    <string name="empty">Field cannot be empty</string>
+    <string name="madeOn">"Made on: "</string>
+    <string name="at">" at "</string>
+</resources>
