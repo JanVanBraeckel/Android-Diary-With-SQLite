@@ -36,7 +36,7 @@ public class DiaryContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mDatabase = new MyDB(getContext());
+        mDatabase = new MyDB(getContext().getApplicationContext());
         mDatabase.open();
         return true;
     }
