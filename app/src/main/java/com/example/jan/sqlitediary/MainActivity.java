@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements DiaryAddFragment.
                 }
                 mFragmentManager
                         .beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
                         .replace(R.id.rootView, mDiaryAddFragment, "add")
                         .addToBackStack(null)
                         .commit();
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements DiaryAddFragment.
 
         mFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
                 .addToBackStack(null)
                 .replace(R.id.rootView, detailFragment, "detail")
                 .commit();
